@@ -50,10 +50,10 @@
               }}
             </p>
             <img
-              class="w-auto h-[50px] object-cover"
-              :src="`http://openweathermap.org/img/wn/${getIconCode(hourData.icon)}@2x.png`"
-              alt="Weather Icon"
-            />
+            class="w-[50px] h-auto"
+            :src="`http://openweathermap.org/img/wn/${getIconCode(hourData.icon)}@2x.png`"
+            alt="Weather Icon"
+          />
             <p class="text-xl">
               {{ Math.round(hourData.temp) }}&deg;
             </p>
@@ -70,11 +70,11 @@
         <div v-for="(dayData, index) in weeklyWeather" :key="index" class="flex items-center">
           <p class="flex-1">
             {{
-              new Date(dayData.date).toLocaleDateString("in", {
+              new Date(dayData.date).toLocaleDateString("in-ID", {
                 weekday: "long",  // Nama hari
-                year: "numeric",  // Tahun
                 day: "2-digit",   // Tanggal
                 month: "long",    // Nama bulan
+                year: "numeric",  // Tahun
               })
             }}
           </p>
@@ -144,6 +144,7 @@ const getWeatherData = async () => {
           weekday: "short",
           day: "2-digit",
           month: "long",
+          year: "numeric",
         }),
         tempMax: openMeteoResponse.data.daily.temperature_2m_max[index],
         tempMin: openMeteoResponse.data.daily.temperature_2m_min[index],
@@ -185,6 +186,7 @@ const getIconCode = (weatherCode) => {
   return iconMapping[weatherCode] || '01d'; // Default to 'clear sky' if not found
 };
 
+await new Promise((res) => setTimeout(res, 1000));
 onMounted(getWeatherData);
 
 const router =useRouter();
